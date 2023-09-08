@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import "./Login.scss";
 import Input from "../../Input";
 import Button from "../../Button";
 import useAuth from "../../../hooks/useAuth";
-import {
-  useNavigate,
-  useLocation,
-  useNavigation,
-  Link,
-} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Info from "../../Info";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(true);
   const [error, setError] = useState("");
   const [isSucceeded, setIsSucceeded] = useState(false);
   const { login } = useAuth();
   const router = useNavigate();
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Basic email format validation using a regular expression
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isEmailValid = emailPattern.test(email);
 
-    if (email === "" || !isEmailValid) {
+    if (email === "") {
       setIsFormValid(false);
       setError("Email is not a valid email");
     } else if (password === "") {
@@ -48,9 +42,9 @@ export default function Login() {
       try {
         await login({ email, password });
         setIsSucceeded(true);
-        setTimeout(() => {
-          router("/");
-        }, 1000);
+        // setTimeout(() => {
+        //   router("/");
+        // }, 1000);
       } catch (error) {
         setIsSucceeded(false);
         setIsFormValid(false);
@@ -78,7 +72,7 @@ export default function Login() {
         />
 
         {!isFormValid && error && <p style={{ color: "red" }}>{error}</p>}
-        {isSucceeded && <Info type="successed">Succecced</Info>}
+        {isSucceeded && <Info type="successed">Succeeded</Info>}
         <Button type="submit" width="100%" label="Login" />
       </form>
       <div
@@ -95,7 +89,7 @@ export default function Login() {
           }}
           to="/auth/register"
         >
-          Don`t you have an account? Register Now
+          Don't you have an account? Register Now
         </Link>
       </div>
     </div>

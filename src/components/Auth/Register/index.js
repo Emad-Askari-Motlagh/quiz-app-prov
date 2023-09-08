@@ -48,8 +48,8 @@ export default function Register() {
       setIsFormValid(true);
       setError("");
       try {
-        await register({ email, password });
-        router("/");
+        await register({ username: email, password });
+        // router("/");
       } catch (error) {
         setIsFormValid(false);
         setError("Error on registration");

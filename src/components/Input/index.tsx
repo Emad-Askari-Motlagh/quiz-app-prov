@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { FaSearchengin } from "react-icons/fa";
-import styles from "./input.module.scss";
 
+import styles from "./input.module.scss";
+interface InputProps {
+  label?: string;
+  placeholder?: string;
+  type?: string;
+  name?: string;
+  handleChange?: any;
+  onBlur?: any;
+  value?: string;
+}
 export default function Input({
   label,
   placeholder,
@@ -10,7 +19,7 @@ export default function Input({
   handleChange,
   onBlur,
   value,
-}) {
+}: InputProps) {
   return (
     <div className={styles.container}>
       <label htmlFor="name">{label}</label>
